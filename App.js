@@ -9,7 +9,7 @@ const itemHeight = height / 2 - Constants.statusBarHeight * 2;
 const fontSize=  300;
 
 const COLORS = ['coral', 'mediumturquoise', 'palevioletred', 'papayawhip', 'tomato']
-const LANGUAGES=[]
+const LANGUAGES=['English','Hindi','Punjabi','Tami','Telugu','Malayalam','Kannada','Bengali','Arabic']
 const ITEMS = [
   'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg',
   'https://s-media-cache-ak0.pinimg.com/564x/53/9d/bb/539dbb7cc07c677925627c6e91585ef5.jpg',
@@ -46,7 +46,7 @@ export default class App extends Component {
   }
 
   setLanguage(i){
-    this.state.language=i.toString()
+    this.state.language=LANGUAGES[i]
     this.setState(this.state)
   }
 
@@ -126,33 +126,10 @@ export default class App extends Component {
         })
       }]}>
         <Image key={i} source={{uri: image}} style={[StyleSheet.AbsoluteFill, {height: itemHeight, width: itemWidth, opacity: 1, resizeMode: 'cover'}]}>
-        <View style={[StyleSheet.AbsoluteFill, {opacity: 0.6, backgroundColor: COLORS[i], width: itemWidth, height: itemHeight}]}>
-          <Text style={{fontSize: fontSize,color: 'white',textAlign:'right'}} onPress={()=>this.setLanguage(i)}>{i+1}</Text>
-        </View>
-        <Animated.View
-            style={[{
-              width: itemWidth,
-              alignItems: 'flex-end',
-              justifyContent: 'flex-end',
-              flex: 1,
-              position: 'relative',
-              height: itemHeight,
-              opacity: this.state.scrollX.interpolate({
-                inputRange,
-                outputRange: [0.4,1, 1, 1]
-              }),
-              transform: [{
-                scale: this.state.scrollX.interpolate({
-                  inputRange,
-                  outputRange: [.5, 1, 1.4, 1]
-                })
-              }]
-            }]}>
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', width: itemWidth, height: itemHeight, position: 'absolute', bottom: -itemHeight / 4, right: -itemWidth / 4}}>
-              <Text style={{fontSize: 30,color: 'white'}}>{"K"}</Text>
-            </View>
-          </Animated.View>
-          </Image>
+          <View style={[StyleSheet.AbsoluteFill, {opacity: 0.6, backgroundColor: COLORS[i], width: itemWidth, height: itemHeight}]}>
+            <Text style={{fontSize: fontSize,color: 'white',textAlign:'right'}} onPress={()=>this.setLanguage(i)}>{i+1}</Text>
+          </View>
+        </Image>
       </Animated.View>
     );
   }
