@@ -9,6 +9,7 @@ const itemHeight = height / 2 - Constants.statusBarHeight * 2;
 const fontSize=  300;
 
 const COLORS = ['coral', 'mediumturquoise', 'palevioletred', 'papayawhip', 'tomato']
+const LANGUAGES=[]
 const ITEMS = [
   'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg',
   'https://s-media-cache-ak0.pinimg.com/564x/53/9d/bb/539dbb7cc07c677925627c6e91585ef5.jpg',
@@ -35,7 +36,8 @@ export default class App extends Component {
 
     this.state = {
       scrollX: new Animated.Value(0),
-      indicator: new Animated.Value(1)
+      indicator: new Animated.Value(1),
+      language:'English'
     }
   }
 
@@ -43,6 +45,10 @@ export default class App extends Component {
     LayoutAnimation.spring()
   }
 
+  setLanguage(i){
+    this.state.language=i.toString()
+    this.setState(this.state)
+  }
 
   render() {
     return (
@@ -53,7 +59,7 @@ export default class App extends Component {
           {this.renderScroll()}
         </View>
         <View style={{flex: 1}}>
-          <Text style={styles.heading}>Trending</Text>
+          <Text style={styles.heading}>{this.state.language}</Text>
           <ScrollView contentContainerStyle={{alignItems: 'flex-start'}} style={{paddingHorizontal: 10, flex: 1, width: width}}>
             {SMALL_ITEMS.map((image,i) => {
               return this.renderNormal(image, i)
@@ -120,7 +126,9 @@ export default class App extends Component {
         })
       }]}>
         <Image key={i} source={{uri: image}} style={[StyleSheet.AbsoluteFill, {height: itemHeight, width: itemWidth, opacity: 1, resizeMode: 'cover'}]}>
-        <View style={[StyleSheet.AbsoluteFill, {opacity: 0.4, backgroundColor: COLORS[i], width: itemWidth, height: itemHeight}]}></View>
+        <View style={[StyleSheet.AbsoluteFill, {opacity: 0.6, backgroundColor: COLORS[i], width: itemWidth, height: itemHeight}]}>
+          <Text style={{fontSize: fontSize,color: 'white',textAlign:'right'}} onPress={()=>this.setLanguage(i)}>{i+1}</Text>
+        </View>
         <Animated.View
             style={[{
               width: itemWidth,
@@ -141,7 +149,7 @@ export default class App extends Component {
               }]
             }]}>
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', width: itemWidth, height: itemHeight, position: 'absolute', bottom: -itemHeight / 4, right: -itemWidth / 4}}>
-              <Text style={{fontSize: fontSize,color: 'rgba(0,0,0,0.4)'}}>{i + 1}</Text>
+              <Text style={{fontSize: 30,color: 'white'}}>{"K"}</Text>
             </View>
           </Animated.View>
           </Image>
