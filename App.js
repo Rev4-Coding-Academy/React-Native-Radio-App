@@ -1,34 +1,36 @@
-import { LayoutAnimation, Animated, Dimensions, Text, View, StyleSheet, ScrollView, Image } from 'react-native';
+import { LayoutAnimation, Animated, Dimensions, StatusBar ,Text, View, StyleSheet, ScrollView, Image } from 'react-native';
 import React, { Component } from 'react';
-import { Constants } from 'expo';
 var {height, width} = Dimensions.get('window');
+import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
+import charts from './assets/charts';
+import english from './assets/english';
+import arabic from './assets/arabic';
+import bengali from './assets/bengali';
+import hindi from './assets/hindi';
+import kannada from './assets/kannada';
+import malayalam from './assets/malayalam';
+import punjabi from './assets/punjabi';
+import tamil from './assets/tamil';
 
+const stations=[
+    {name:'Charts',channels:charts,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'},
+    {name:'English',channels:english,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'},
+    {name:'Hindi',channels:hindi,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'},
+    {name:'Punjabi',channels:punjabi,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'},
+    {name:'Tamil',channels:tamil,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'},
+    {name:'Telugu',channels:charts,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'},
+    {name:'Malayalam',channels:malayalam,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'},
+    {name:'Kannada',channels:kannada,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'},
+    {name:'Bengali',channels:bengali,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'},
+    {name:'Arabic',channels:arabic,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'}
+  ]
+const url=stations[1].channels[2].file;
 const smallSize = width / 5;
 const itemWidth = width * .67;
-const itemHeight = height / 2 - Constants.statusBarHeight * 2;
+const itemHeight = height / 2 - StatusBar.currentHeight * 2;
 const fontSize=  300;
 
-const COLORS = ['coral', 'mediumturquoise', 'palevioletred', 'papayawhip', 'tomato']
-const LANGUAGES=['English','Hindi','Punjabi','Tami','Telugu','Malayalam','Kannada','Bengali','Arabic']
-const ITEMS = [
-  'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg',
-  'https://s-media-cache-ak0.pinimg.com/564x/53/9d/bb/539dbb7cc07c677925627c6e91585ef5.jpg',
-  'https://s-media-cache-ak0.pinimg.com/564x/3d/0b/a6/3d0ba6600a33f3e4b3bac737e024d720.jpg',
-  'https://s-media-cache-ak0.pinimg.com/564x/d9/b8/27/d9b8276db7cd24443bc4a937f853914b.jpg',
-  'https://s-media-cache-ak0.pinimg.com/564x/75/eb/53/75eb53941897f231cd0b55f25806d887.jpg',
-  ''
-]
-
-const SMALL_ITEMS = [
-  'https://s-media-cache-ak0.pinimg.com/564x/e3/44/6f/e3446f61632a9381c96362b45749c5f6.jpg',
-  'https://s-media-cache-ak0.pinimg.com/236x/8e/e3/ef/8ee3efa5a843f2c79258e3f0684d306e.jpg',
-  'https://s-media-cache-ak0.pinimg.com/236x/f1/1c/26/f11c26247021daeac5ec8c3aba1792d1.jpg',
-  'https://s-media-cache-ak0.pinimg.com/236x/fa/5c/a9/fa5ca9074f962ef824e513aac4d59f1f.jpg',
-  'https://s-media-cache-ak0.pinimg.com/236x/95/bb/e4/95bbe482ca9744ea71f68321ec4260a2.jpg',
-  'https://s-media-cache-ak0.pinimg.com/564x/54/7d/13/547d1303000793176aca26505312089c.jpg',
-  ''
-]
-
+const COLORS = ['coral', 'mediumturquoise', 'palevioletred', 'papayawhip', 'tomato','plum','goldenrod']
 
 export default class App extends Component {
   constructor(props) {
@@ -37,7 +39,7 @@ export default class App extends Component {
     this.state = {
       scrollX: new Animated.Value(0),
       indicator: new Animated.Value(1),
-      language:'English'
+      station:stations[0]
     }
   }
 
@@ -45,9 +47,9 @@ export default class App extends Component {
     LayoutAnimation.spring()
   }
 
-  setLanguage(i){
-    this.state.language=LANGUAGES[i]
-    this.setState(this.state)
+  changeLanguage(i){
+    this.state.station=stations[i];
+    this.setState(this.state);
   }
 
   render() {
@@ -59,10 +61,10 @@ export default class App extends Component {
           {this.renderScroll()}
         </View>
         <View style={{flex: 1}}>
-          <Text style={styles.heading}>{this.state.language}</Text>
+          <Text style={styles.heading}>{this.state.station.name}</Text>
           <ScrollView contentContainerStyle={{alignItems: 'flex-start'}} style={{paddingHorizontal: 10, flex: 1, width: width}}>
-            {SMALL_ITEMS.map((image,i) => {
-              return this.renderNormal(image, i)
+            {this.state.station.channels.map((channel,i) => {
+              return this.renderNormal(channel, i)
             })}
           </ScrollView>
           </View>
@@ -84,33 +86,29 @@ export default class App extends Component {
         [{ nativeEvent: { contentOffset: { x: this.state.scrollX } } }]
       )}
     >
-      {ITEMS.map((image,i) => {
-        return this.renderRow(image, i)
+      {stations.map((station,i) => {
+        return this.renderRow(station, i)
       })}
     </Animated.ScrollView>
   }
 
 
-  renderNormal(image, i) {
-    if (image === '' ) {
-      return null
-    }
-
+  renderNormal(channel, i) {
     return <View key={i}  style={{flexDirection: 'row', flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
-        <Image source={{uri: image}} style={[{height: smallSize, width: smallSize, opacity: 1, resizeMode: 'cover'}]} />
+        <Image source={{uri: 'https://s-media-cache-ak0.pinimg.com/564x/e3/44/6f/e3446f61632a9381c96362b45749c5f6.jpg'}} style={[{height: smallSize, width: smallSize, opacity: 1, resizeMode: 'cover'}]} />
         <View style={{marginLeft: 20}}>
-          <Text style={{fontWeight: '600', fontSize: 16}}>Words of wisdom</Text>
-          <Text style={{fontWeight: '300', fontSize: 12}}>We live in a world of deadlines</Text>
+          <Text style={{fontWeight: '600', fontSize: 16}}>{channel.name}</Text>
+          <Text style={{fontWeight: '300', fontSize: 12}}>{channel.city}</Text>
         </View>
       </View>
   }
 
-  renderRow(image, i) {
+  renderRow(station, i) {
     let inputRange = [(i - 1) * itemWidth, i * itemWidth, (i + 1) * itemWidth, (i + 2) * itemWidth];
     let secondRange = [(i - 1) * itemWidth, i * itemWidth, (i + 1) * itemWidth]
 
     // Ensure that we're leaving space for latest item.
-    if (image === '') {
+    if (station.image === '') {
       return <View key={i} style={[styles.emptyItem, {width: width * .33}]}></View>
     }
 
@@ -122,12 +120,12 @@ export default class App extends Component {
         }),
         height: this.state.scrollX.interpolate({
           inputRange: secondRange,
-          outputRange: [itemHeight * .8, itemHeight, itemHeight],
+          outputRange: [itemHeight*0.8, itemHeight, itemHeight],
         })
       }]}>
-        <Image key={i} source={{uri: image}} style={[StyleSheet.AbsoluteFill, {height: itemHeight, width: itemWidth, opacity: 1, resizeMode: 'cover'}]}>
+        <Image key={i} source={{uri: station.image}} style={[StyleSheet.AbsoluteFill, {height: itemHeight, width: itemWidth, opacity: 1, resizeMode: 'cover'}]}>
           <View style={[StyleSheet.AbsoluteFill, {opacity: 0.6, backgroundColor: COLORS[i], width: itemWidth, height: itemHeight}]}>
-            <Text style={{fontSize: fontSize,color: 'white',textAlign:'right'}} onPress={()=>this.setLanguage(i)}>{i+1}</Text>
+            <Text style={{fontSize: fontSize,color: 'white',textAlign:'right'}} onPress={()=>this.changeLanguage(i)}>{i+1}</Text>
           </View>
         </Image>
       </Animated.View>
@@ -139,8 +137,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: Constants.statusBarHeight
+    justifyContent: 'center'
   },
   emptyItem: {
     overflow: 'hidden',
@@ -149,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderLeftWidth: 20,
-    borderColor: 'white',
+    borderColor: 'transparent',
     width: itemWidth,
     backgroundColor: 'transparent'
   },
