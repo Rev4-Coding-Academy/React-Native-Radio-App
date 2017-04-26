@@ -11,7 +11,7 @@ import kannada from './assets/kannada';
 import malayalam from './assets/malayalam';
 import punjabi from './assets/punjabi';
 import tamil from './assets/tamil';
-
+var play_btn=require('./assets/play_btn.png')
 const stations=[
     {name:'Charts',channels:charts,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'},
     {name:'English',channels:english,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'},
@@ -25,7 +25,7 @@ const stations=[
     {name:'Arabic',channels:arabic,image:'https://s-media-cache-ak0.pinimg.com/564x/1d/00/9d/1d009d53dd993bd0a604397e65bbde6d.jpg'}
   ]
 const url=stations[1].channels[2].file;
-const smallSize = width / 5;
+const smallSize = width / 10;
 const itemWidth = width * .67;
 const itemHeight = height / 2 - StatusBar.currentHeight * 2;
 const fontSize=  300;
@@ -55,13 +55,11 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-
-        <View style={{height: 20 + height / 2}}>
-          <Text style={[styles.heading, {fontSize: 28}]}>Favorites</Text>
+        <View style={{height: itemWidth+70,backgroundColor:'white',elevation:20}}>
           {this.renderScroll()}
+          <Text style={styles.heading}>{this.state.station.name.toUpperCase()}</Text>
         </View>
-        <View style={{flex: 1}}>
-          <Text style={styles.heading}>{this.state.station.name}</Text>
+        <View style={{flex: 1,backgroundColor:'white'}}>
           <ScrollView contentContainerStyle={{alignItems: 'flex-start'}} style={{paddingHorizontal: 10, flex: 1, width: width}}>
             {this.state.station.channels.map((channel,i) => {
               return this.renderNormal(channel, i)
@@ -95,10 +93,10 @@ export default class App extends Component {
 
   renderNormal(channel, i) {
     return <View key={i}  style={{flexDirection: 'row', flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 20}}>
-        <Image source={{uri: 'https://s-media-cache-ak0.pinimg.com/564x/e3/44/6f/e3446f61632a9381c96362b45749c5f6.jpg'}} style={[{height: smallSize, width: smallSize, opacity: 1, resizeMode: 'cover'}]} />
+        <Image source={play_btn} style={{height: smallSize, width: smallSize, opacity: 1, resizeMode: 'cover',backgroundColor:'coral'}} />
         <View style={{marginLeft: 20}}>
-          <Text style={{fontWeight: '600', fontSize: 16}}>{channel.name}</Text>
-          <Text style={{fontWeight: '300', fontSize: 12}}>{channel.city}</Text>
+          <Text style={{fontWeight: '600', fontSize: 20}}>{channel.name}</Text>
+          <Text style={{fontWeight: '300', fontSize: 14}}>{channel.city}</Text>
         </View>
       </View>
   }
@@ -156,5 +154,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     paddingHorizontal: 10,
     paddingVertical: 10,
+    width:width
   }
 });
