@@ -4,13 +4,15 @@
   "private": true,
   "devDependencies": {
     "jest-expo": "^0.3.0",
-    "react-test-renderer": "~15.4.1"
+    "react-test-renderer": "~15.4.1",
+    "@kadira/react-native-storybook": "^2.0.0"
   },
   "scripts": {
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "test": "node node_modules/jest/bin/jest.js --watch"
+    "test": "node node_modules/jest/bin/jest.js --watch",
+    "storybook": "storybook start -p 7007"
   },
   "jest": {
     "preset": "jest-expo"
