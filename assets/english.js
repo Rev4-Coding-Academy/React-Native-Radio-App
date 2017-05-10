@@ -6,12 +6,6 @@ var data = [
        "city":"UK",
       "file":"http://relay2.181.fm:8070/"
    },
-//   {
-//      "id":43,
-//      "name":"Channel 4 FM",
-//       "city":"UAE",
-//      "file":"http://5293.live.streamtheworld.com:80/CHANNEL4FM_SC"
-//   },
     {
       "id":1,
       "name":"Europa Plus",
@@ -47,12 +41,6 @@ var data = [
       "name":"Radio City International",
        "city":"India",
       "file":"http://208.115.222.203:8996/;stream.mp3"
-   },
-   {
-      "id":8,
-      "name":"Virgin Radio",
-       "city":"UAE",
-      "file":"http://13373.live.streamtheworld.com:443/VIRGINRADIO_DUBAIAAC_SC"
    },
    {
       "id":9,
